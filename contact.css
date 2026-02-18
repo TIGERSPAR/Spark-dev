@@ -1,0 +1,40 @@
+/* CONTACT PAGE */
+.contact-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:100px; align-items:start; }
+.contact-methods { display:flex; flex-direction:column; gap:16px; margin-top:36px; margin-bottom:28px; }
+.contact-method { display:flex; align-items:center; gap:18px; padding:18px 22px; border:1px solid var(--gold-dim); background:var(--card-bg); transition:border-color .3s; }
+.contact-method:hover { border-color:var(--gold); }
+.cm-icon { width:40px;height:40px; border:1px solid var(--gold-dim); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+.cm-label { font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--dark-muted);text-transform:uppercase;display:block;margin-bottom:4px; }
+.cm-value { font-size:14px;font-weight:700;color:var(--white);letter-spacing:1px; }
+
+.avail-banner { display:flex;align-items:center;gap:16px; padding:18px 22px; background:rgba(77,255,160,.05); border:1px solid rgba(77,255,160,.2); }
+.avail-dot { width:10px;height:10px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green);flex-shrink:0;animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{box-shadow:0 0 10px var(--green)}50%{box-shadow:0 0 20px var(--green),0 0 40px rgba(77,255,160,.3)}}
+.avail-title { font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--green);display:block;margin-bottom:3px; }
+.avail-sub { font-size:11px;color:var(--muted); }
+
+/* FORM */
+.contact-form { display:flex;flex-direction:column;gap:18px; }
+.form-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+.form-group label { font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--dark-muted);text-transform:uppercase;display:block;margin-bottom:8px; }
+.form-group input,
+.form-group select,
+.form-group textarea { width:100%;background:var(--card-bg);border:1px solid var(--gold-dim);color:var(--white);padding:14px 18px;font-family:'Josefin Sans',sans-serif;font-size:13px;outline:none;transition:border-color .3s;-webkit-appearance:none; }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color:var(--gold); }
+.form-group textarea { resize:none;height:130px; }
+.form-group select { cursor:pointer; }
+.form-group select option { background:var(--bg3); }
+
+.btn-submit { display:flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--bg);padding:18px 40px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;width:100%;transition:all .3s;position:relative;overflow:hidden; }
+.btn-submit::after { content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-100%) skewX(-15deg);transition:transform .4s; }
+.btn-submit:hover::after { transform:translateX(120%) skewX(-15deg); }
+.btn-submit:hover { box-shadow:0 0 30px rgba(212,175,106,.25); }
+
+#backTop { position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:linear-gradient(135deg,#8C6A1E,#D4AF6A);border:none;cursor:pointer;z-index:800;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;pointer-events:none; }
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr;gap:60px}
+  .form-row{grid-template-columns:1fr}
+}
