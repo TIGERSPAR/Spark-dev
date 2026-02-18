@@ -516,3 +516,55 @@ footer {
 @media (max-width: 600px) {
   .footer-top { grid-template-columns: 1fr; }
 }
+
+/* ── WHATSAPP FLOATING BUTTON (all pages) ── */
+.wa-float {
+  position: fixed;
+  bottom: 88px;
+  right: 28px;
+  z-index: 850;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  transition: all 0.3s;
+  overflow: hidden;
+  max-width: 54px;
+}
+.wa-float:hover {
+  max-width: 220px;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+  transform: translateY(-2px);
+}
+.wa-label {
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s 0.05s;
+  pointer-events: none;
+}
+.wa-float:hover .wa-label { opacity: 1; }
+
+/* Pulse ring on WhatsApp button */
+.wa-float::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  border: 2px solid #25D366;
+  animation: waPulse 2.5s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes waPulse {
+  0%  { transform: scale(1);   opacity: 0.6; }
+  70% { transform: scale(1.25); opacity: 0; }
+  100%{ transform: scale(1.25); opacity: 0; }
+}
