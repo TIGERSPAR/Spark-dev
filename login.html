@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Sparkling Dev</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+</head> 
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark"><span>S</span></div>
+      <span class="logo-text">Sparkling<span>Dev</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="register.html" class="nav-cta"><span>Register</span></a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+    <a href="register.html">Register</a>
+  </div>
+
+  <div class="auth-bg">
+    <div class="auth-grid"></div>
+    <div class="auth-glow"></div>
+
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-mark"><span>S</span></div>
+        <span class="logo-text">Sparkling<span>Dev</span></span>
+      </div>
+
+      <div class="auth-header">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-sub">Sign in to track your orders & projects</p>
+      </div>
+
+      <div class="auth-alert" id="authAlert"></div>
+
+      <form class="auth-form" id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" placeholder="Your password" required>
+            <button type="button" class="toggle-pw" id="togglePw">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth" id="loginBtn">
+          <span>Sign In</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+      </form>
+
+      <p class="auth-switch">
+        Don't have an account? <a href="register.html">Create one</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="main.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
