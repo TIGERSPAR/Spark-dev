@@ -4,8 +4,189 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio — Sparkling Dev</title>
+  <meta name="description" content="Portfolio of Sparkling Dev — Premium web development, flyer design, birthday cards and invitation cards. Buea, Cameroon.">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Josefin+Sans:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="portfolio.css">
+  <style>
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    min-height: 42vh;
+    display: flex; align-items: flex-end;
+    padding: 0 60px 60px;
+    position: relative; overflow: hidden;
+    background: var(--bg2);
+  }
+  .page-hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,175,106,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,175,106,.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero-content { position: relative; z-index: 2; padding-top: 120px; }
+  .page-eyebrow { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .page-eyebrow .line { width:30px; height:1px; background:var(--gold); }
+  .page-eyebrow span { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:5px; color:var(--gold); text-transform:uppercase; }
+  .page-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(48px,8vw,90px); font-weight:700; line-height:.92; letter-spacing:-2px; color:var(--white); }
+  .page-hero h1 span { background:linear-gradient(135deg,var(--gold-dark),var(--gold-bright)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  /* ── CONTAINER ── */
+  .container { max-width:1200px; margin:0 auto; padding:100px 60px; }
+
+  /* ── FILTER TABS ── */
+  .filter-wrap { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:56px; }
+  .filter-btn {
+    border:1px solid var(--gold-dim); background:transparent;
+    color:var(--muted); padding:8px 22px;
+    font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase;
+    cursor:pointer; transition:all .3s;
+  }
+  .filter-btn.active, .filter-btn:hover { border-color:var(--gold); color:var(--gold); background:rgba(212,175,106,.06); }
+
+  /* ── PORTFOLIO GRID ── */
+  .portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+
+  /* Wide cards */
+  .p-wide { grid-column: span 2; }
+
+  /* ── PORTFOLIO CARD ── */
+  .p-card {
+    background:var(--bg3); border:1px solid var(--gold-dim);
+    overflow:hidden; transition:border-color .4s, transform .4s;
+    cursor:default; position:relative;
+  }
+  .p-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+
+  /* Image area */
+  .p-img {
+    width:100%; aspect-ratio:16/10;
+    background:var(--bg4);
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .p-wide .p-img { aspect-ratio:16/8; }
+  .p-tall .p-img { aspect-ratio:3/4; }
+
+  /* Real image */
+  .p-img img {
+    width:100%; height:100%;
+    object-fit:cover; object-position:top center;
+    transition:transform .6s ease;
+  }
+  .p-card:hover .p-img img { transform:scale(1.04); }
+
+  /* SVG mock screens for samples */
+  .mock-preview {
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+
+  /* Overlay on hover */
+  .p-overlay {
+    position:absolute; inset:0;
+    background:rgba(5,5,8,.88);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:10px;
+    opacity:0; transition:opacity .4s;
+  }
+  .p-card:hover .p-overlay { opacity:1; }
+  .p-overlay-tag {
+    font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px;
+    color:var(--gold); border:1px solid var(--gold-dim); padding:4px 14px;
+  }
+  .p-overlay-title {
+    font-family:'Cormorant Garamond',serif; font-size:22px;
+    font-weight:700; color:var(--white);
+  }
+  .p-overlay-cta {
+    display:flex; align-items:center; gap:8px; margin-top:4px;
+    font-family:'Share Tech Mono',monospace; font-size:9px;
+    letter-spacing:2px; color:var(--gold);
+  }
+
+  /* Card info */
+  .p-info {
+    padding:18px 24px;
+    border-top:1px solid var(--gold-dim);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .p-category {
+    font-family:'Share Tech Mono',monospace; font-size:8px;
+    letter-spacing:3px; color:var(--gold); display:block; margin-bottom:5px;
+  }
+  .p-title {
+    font-family:'Cormorant Garamond',serif; font-size:18px;
+    font-weight:700; color:var(--white);
+  }
+  .p-arrow {
+    width:32px; height:32px; border:1px solid var(--gold-dim);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:all .3s;
+  }
+  .p-card:hover .p-arrow { border-color:var(--gold); background:var(--gold); }
+  .p-card:hover .p-arrow svg { stroke:#050508; }
+
+  /* Hidden for filter */
+  .p-card.hidden { display:none; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background:var(--bg3);
+    border-top:1px solid rgba(212,175,106,.1);
+    border-bottom:1px solid rgba(212,175,106,.1);
+    padding:80px 60px;
+  }
+  .cta-inner {
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center;
+    justify-content:space-between; gap:40px;
+  }
+  .cta-eyebrow { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+  .cta-eyebrow .line { width:30px; height:1px; background:var(--gold); }
+  .cta-eyebrow span { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:5px; color:var(--gold); text-transform:uppercase; }
+  .cta-title { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,4vw,48px); font-weight:700; color:var(--white); line-height:1.1; }
+  .cta-title span { background:linear-gradient(135deg,var(--gold-dark),var(--gold-bright)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:12px;
+    background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+    color:var(--bg); padding:16px 36px;
+    font-family:'Share Tech Mono',monospace; font-size:10px;
+    letter-spacing:3px; text-transform:uppercase;
+    text-decoration:none; font-weight:700; border:none;
+    cursor:pointer; transition:all .3s; position:relative; overflow:hidden;
+    flex-shrink:0;
+  }
+  .btn-primary::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.15); transform:translateX(-100%) skewX(-15deg); transition:transform .4s; }
+  .btn-primary:hover::after { transform:translateX(120%) skewX(-15deg); }
+  .btn-primary:hover { box-shadow:0 0 30px rgba(212,175,106,.3); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay:.1s; }
+  .reveal-delay-2 { transition-delay:.2s; }
+
+  /* ── MOBILE ── */
+  @media(max-width:900px) {
+    nav { padding:16px 24px; }
+    nav.scrolled { padding:12px 24px; }
+    .nav-links, .nav-cta { display:none; }
+    .hamburger { display:flex; }
+    .page-hero { padding:0 24px 40px; }
+    .container { padding:60px 24px; }
+    .portfolio-grid { grid-template-columns:1fr 1fr; }
+    .p-wide { grid-column:span 2; }
+    .cta-section { padding:50px 24px; }
+    .cta-inner { flex-direction:column; align-items:flex-start; }
+  }
+  @media(max-width:600px) {
+    .portfolio-grid { grid-template-columns:1fr; }
+    .p-wide { grid-column:span 1; }
+  }
+
+  </style>
 </head>
 <body>
 
@@ -35,168 +216,462 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <div class="page-hero" style="background:var(--bg2)">
+  <!-- PAGE HERO -->
+  <div class="page-hero">
     <div class="page-hero-grid"></div>
-    <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+    <div class="corner-deco tl"></div>
+    <div class="corner-deco tr"></div>
     <div class="page-hero-content">
-      <div class="page-hero-eyebrow"><div class="line"></div><span>My Work</span></div>
+      <div class="page-eyebrow"><div class="line"></div><span>My Work</span></div>
       <h1>Selected <span>Portfolio</span></h1>
     </div>
   </div>
 
+  <!-- PORTFOLIO -->
   <div style="background:var(--bg2)">
     <div class="container">
 
-      <!-- Filter tabs -->
-      <div class="filter-tabs reveal">
+      <!-- Filter -->
+      <div class="filter-wrap reveal">
         <button class="filter-btn active" data-filter="all">All Work</button>
         <button class="filter-btn" data-filter="web">Websites</button>
-        <button class="filter-btn" data-filter="design">Design</button>
+        <button class="filter-btn" data-filter="flyer">Flyers</button>
+        <button class="filter-btn" data-filter="card">Cards</button>
         <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
       </div>
 
-      <div class="portfolio-grid reveal">
+      <!-- Grid -->
+      <div class="portfolio-grid">
 
-        <div class="p-card" data-category="web">
-          <div class="p-card-img">
-            <div class="mock-screen">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:70%"></div>
-              <div class="mock-grid"><div class="mock-block"></div><div class="mock-block"></div><div class="mock-block"></div><div class="mock-block"></div></div>
+        <!-- 1. REAL FLYER — Sparkling Dev Promo (wide) -->
+        <div class="p-card p-wide reveal" data-category="flyer">
+          <div class="p-img">
+            <img src="flyer-sparkling.png" alt="Sparkling Dev Promotional Flyer">
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Flyer Design</span>
+              <span class="p-overlay-title">Sparkling Dev Promo Flyer</span>
+              <span class="p-overlay-cta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                View Project
+              </span>
             </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">Website</span>
+          </div>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Flyer Design · Digital & Print</span>
+              <span class="p-title">Sparkling Dev — Promotional Flyer</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Business Website (sample) -->
+        <div class="p-card reveal reveal-delay-1" data-category="web">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="340" height="220" fill="#08080F"/>
+                <!-- Nav -->
+                <rect x="0" y="0" width="340" height="32" fill="#0C0C1A"/>
+                <rect x="16" y="11" width="40" height="10" rx="2" fill="#D4AF6A" opacity=".8"/>
+                <rect x="220" y="13" width="30" height="7" rx="2" fill="#4A3810" opacity=".6"/>
+                <rect x="258" y="13" width="30" height="7" rx="2" fill="#4A3810" opacity=".6"/>
+                <rect x="296" y="10" width="30" height="12" rx="1" fill="#8C6A1E" opacity=".7"/>
+                <!-- Hero text -->
+                <rect x="16" y="50" width="120" height="18" rx="2" fill="#FFFFFF" opacity=".9"/>
+                <rect x="16" y="74" width="180" height="28" rx="2" fill="#D4AF6A" opacity=".7"/>
+                <rect x="16" y="110" width="100" height="8" rx="2" fill="#7070A0" opacity=".5"/>
+                <rect x="16" y="124" width="80" height="8" rx="2" fill="#7070A0" opacity=".4"/>
+                <rect x="16" y="146" width="70" height="22" rx="1" fill="#8C6A1E" opacity=".8"/>
+                <rect x="96" y="146" width="70" height="22" rx="1" fill="#4A3810" opacity=".5"/>
+                <!-- Right image box -->
+                <rect x="200" y="44" width="124" height="140" rx="2" fill="#101022"/>
+                <rect x="200" y="44" width="124" height="140" rx="2" fill="none" stroke="#4A3810" stroke-width="1"/>
+                <rect x="214" y="60" width="96" height="60" rx="2" fill="#0C0C1A"/>
+                <rect x="214" y="60" width="96" height="60" rx="2" fill="none" stroke="#D4AF6A" stroke-width=".5" opacity=".4"/>
+                <rect x="214" y="130" width="60" height="8" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="214" y="144" width="80" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <rect x="214" y="156" width="50" height="6" rx="2" fill="#7070A0" opacity=".2"/>
+                <!-- Stats bar -->
+                <rect x="0" y="192" width="340" height="28" fill="#0C0C1A"/>
+                <rect x="20" y="200" width="30" height="10" rx="2" fill="#D4AF6A" opacity=".6"/>
+                <rect x="100" y="200" width="30" height="10" rx="2" fill="#D4AF6A" opacity=".6"/>
+                <rect x="180" y="200" width="30" height="10" rx="2" fill="#D4AF6A" opacity=".6"/>
+                <rect x="260" y="200" width="30" height="10" rx="2" fill="#D4AF6A" opacity=".6"/>
+              </svg>
+            </div>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Website</span>
               <span class="p-overlay-title">Business Website</span>
             </div>
           </div>
-          <div class="p-card-info">
-            <span class="p-category">Web Development</span>
-            <h3 class="p-title">Premium Business Site</h3>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Web Development · Responsive</span>
+              <span class="p-title">Premium Business Website</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
           </div>
         </div>
 
-        <div class="p-card p-card-wide" data-category="design">
-          <div class="p-card-img">
-            <div class="mock-screen" style="width:60%;height:80%">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:55%"></div>
-              <div class="mock-grid" style="grid-template-columns:1fr"><div class="mock-block"></div><div class="mock-block" style="opacity:.5"></div></div>
+        <!-- 3. Birthday Card (sample) -->
+        <div class="p-card reveal" data-category="card">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="220" height="220" fill="#08080F"/>
+                <!-- Card shape -->
+                <rect x="30" y="20" width="160" height="180" rx="4" fill="#0C0C1A" stroke="#D4AF6A" stroke-width="1" opacity=".9"/>
+                <!-- Gold top accent -->
+                <rect x="30" y="20" width="160" height="4" rx="2" fill="#D4AF6A" opacity=".8"/>
+                <!-- Decorative circles -->
+                <circle cx="110" cy="75" r="30" fill="none" stroke="#D4AF6A" stroke-width="1" opacity=".3"/>
+                <circle cx="110" cy="75" r="22" fill="#101022"/>
+                <text x="110" y="82" text-anchor="middle" font-family="serif" font-size="22" fill="#D4AF6A" opacity=".9">🎂</text>
+                <!-- Happy Birthday text -->
+                <rect x="50" y="118" width="120" height="14" rx="2" fill="#D4AF6A" opacity=".7"/>
+                <rect x="65" y="140" width="90" height="8" rx="2" fill="#FFFFFF" opacity=".6"/>
+                <rect x="55" y="156" width="110" height="6" rx="2" fill="#7070A0" opacity=".4"/>
+                <!-- Gold divider -->
+                <line x1="50" y1="172" x2="170" y2="172" stroke="#D4AF6A" stroke-width=".5" opacity=".4"/>
+                <rect x="80" y="180" width="60" height="8" rx="2" fill="#8C6A1E" opacity=".6"/>
+                <!-- Corner decorations -->
+                <path d="M35 25 L35 38 M35 25 L48 25" stroke="#D4AF6A" stroke-width="1" opacity=".6" fill="none"/>
+                <path d="M185 25 L185 38 M185 25 L172 25" stroke="#D4AF6A" stroke-width="1" opacity=".6" fill="none"/>
+                <path d="M35 195 L35 182 M35 195 L48 195" stroke="#D4AF6A" stroke-width="1" opacity=".6" fill="none"/>
+                <path d="M185 195 L185 182 M185 195 L172 195" stroke="#D4AF6A" stroke-width="1" opacity=".6" fill="none"/>
+              </svg>
             </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">Flyer Design</span>
-              <span class="p-overlay-title">Event Promotion Flyer</span>
-            </div>
-          </div>
-          <div class="p-card-info">
-            <span class="p-category">Print & Digital Design</span>
-            <h3 class="p-title">Event Flyer Series</h3>
-          </div>
-        </div>
-
-        <div class="p-card p-card-wide" data-category="ecommerce">
-          <div class="p-card-img">
-            <div class="mock-screen">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:80%"></div>
-              <div class="mock-grid"><div class="mock-block"></div><div class="mock-block"></div><div class="mock-block"></div><div class="mock-block"></div></div>
-            </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">E-Commerce</span>
-              <span class="p-overlay-title">Online Store</span>
-            </div>
-          </div>
-          <div class="p-card-info">
-            <span class="p-category">E-Commerce · Web Dev</span>
-            <h3 class="p-title">Full Online Store</h3>
-          </div>
-        </div>
-
-        <div class="p-card" data-category="design">
-          <div class="p-card-img">
-            <div class="mock-screen" style="width:72%;height:72%">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:50%"></div>
-              <div class="mock-grid" style="grid-template-columns:1fr"><div class="mock-block"></div></div>
-            </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">Card Design</span>
-              <span class="p-overlay-title">Wedding Invitation</span>
-            </div>
-          </div>
-          <div class="p-card-info">
-            <span class="p-category">Invitation Design</span>
-            <h3 class="p-title">Wedding Invitation</h3>
-          </div>
-        </div>
-
-        <div class="p-card" data-category="web">
-          <div class="p-card-img">
-            <div class="mock-screen">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:60%"></div>
-              <div class="mock-grid"><div class="mock-block"></div><div class="mock-block"></div></div>
-            </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">Landing Page</span>
-              <span class="p-overlay-title">Lead Generation Page</span>
-            </div>
-          </div>
-          <div class="p-card-info">
-            <span class="p-category">Landing Page</span>
-            <h3 class="p-title">Lead Gen Landing Page</h3>
-          </div>
-        </div>
-
-        <div class="p-card" data-category="design">
-          <div class="p-card-img">
-            <div class="mock-screen" style="width:70%;height:70%">
-              <div class="mock-bar"></div><div class="mock-bar" style="width:45%"></div>
-              <div class="mock-grid" style="grid-template-columns:1fr"><div class="mock-block"></div></div>
-            </div>
-            <div class="p-card-overlay">
-              <span class="p-tag">Card Design</span>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Card Design</span>
               <span class="p-overlay-title">Birthday Card</span>
             </div>
           </div>
-          <div class="p-card-info">
-            <span class="p-category">Birthday Card Design</span>
-            <h3 class="p-title">Premium Birthday Card</h3>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Card Design · Digital & Print</span>
+              <span class="p-title">Luxury Birthday Card</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
           </div>
         </div>
 
-      </div>
+        <!-- 4. E-Commerce Store (sample, wide) -->
+        <div class="p-card p-wide reveal reveal-delay-1" data-category="ecommerce">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="500" height="200" fill="#08080F"/>
+                <!-- Nav -->
+                <rect x="0" y="0" width="500" height="30" fill="#0C0C1A"/>
+                <rect x="16" y="10" width="50" height="10" rx="2" fill="#D4AF6A" opacity=".8"/>
+                <rect x="180" y="12" width="35" height="7" rx="2" fill="#4A3810" opacity=".5"/>
+                <rect x="225" y="12" width="35" height="7" rx="2" fill="#4A3810" opacity=".5"/>
+                <rect x="270" y="12" width="35" height="7" rx="2" fill="#4A3810" opacity=".5"/>
+                <rect x="440" y="9" width="50" height="14" rx="1" fill="#8C6A1E" opacity=".8"/>
+                <!-- Hero banner -->
+                <rect x="0" y="30" width="500" height="60" fill="#101022"/>
+                <rect x="20" y="44" width="140" height="16" rx="2" fill="#FFFFFF" opacity=".8"/>
+                <rect x="20" y="66" width="100" height="10" rx="2" fill="#7070A0" opacity=".4"/>
+                <rect x="380" y="38" width="100" height="44" rx="2" fill="#0C0C1A" stroke="#D4AF6A" stroke-width=".5" opacity=".6"/>
+                <!-- Products grid -->
+                <rect x="16" y="104" width="100" height="76" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="16" y="104" width="100" height="46" rx="2" fill="#101022"/>
+                <rect x="28" y="156" width="50" height="7" rx="2" fill="#FFFFFF" opacity=".6"/>
+                <rect x="28" y="168" width="36" height="6" rx="2" fill="#D4AF6A" opacity=".6"/>
+
+                <rect x="130" y="104" width="100" height="76" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="130" y="104" width="100" height="46" rx="2" fill="#101022"/>
+                <rect x="142" y="156" width="50" height="7" rx="2" fill="#FFFFFF" opacity=".6"/>
+                <rect x="142" y="168" width="36" height="6" rx="2" fill="#D4AF6A" opacity=".6"/>
+
+                <rect x="244" y="104" width="100" height="76" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="244" y="104" width="100" height="46" rx="2" fill="#101022"/>
+                <rect x="256" y="156" width="50" height="7" rx="2" fill="#FFFFFF" opacity=".6"/>
+                <rect x="256" y="168" width="36" height="6" rx="2" fill="#D4AF6A" opacity=".6"/>
+
+                <rect x="358" y="104" width="126" height="76" rx="2" fill="#0C0C1A" stroke="#8C6A1E" stroke-width="1" opacity=".8"/>
+                <rect x="358" y="104" width="126" height="46" rx="2" fill="#101022"/>
+                <rect x="370" y="156" width="50" height="7" rx="2" fill="#FFFFFF" opacity=".6"/>
+                <rect x="370" y="168" width="36" height="6" rx="2" fill="#D4AF6A" opacity=".6"/>
+              </svg>
+            </div>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">E-Commerce</span>
+              <span class="p-overlay-title">Online Store</span>
+            </div>
+          </div>
+          <div class="p-info">
+            <div>
+              <span class="p-category">E-Commerce · Web Development</span>
+              <span class="p-title">Full Online Shop with Cart & Checkout</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Invitation Card (sample) -->
+        <div class="p-card reveal reveal-delay-2" data-category="card">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="220" height="220" fill="#050508"/>
+                <!-- Card -->
+                <rect x="20" y="16" width="180" height="188" rx="3" fill="#0C0C1A"/>
+                <!-- Gold border -->
+                <rect x="20" y="16" width="180" height="188" rx="3" fill="none" stroke="#D4AF6A" stroke-width=".8" opacity=".6"/>
+                <rect x="26" y="22" width="168" height="176" rx="2" fill="none" stroke="#4A3810" stroke-width=".5" opacity=".4"/>
+                <!-- Top ornament -->
+                <path d="M110 36 L120 50 L110 44 L100 50 Z" fill="#D4AF6A" opacity=".6"/>
+                <line x1="40" y1="44" x2="90" y2="44" stroke="#D4AF6A" stroke-width=".5" opacity=".4"/>
+                <line x1="130" y1="44" x2="180" y2="44" stroke="#D4AF6A" stroke-width=".5" opacity=".4"/>
+                <!-- Main text -->
+                <rect x="50" y="60" width="120" height="10" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="40" y="78" width="140" height="20" rx="2" fill="#FFFFFF" opacity=".85"/>
+                <rect x="60" y="106" width="100" height="8" rx="2" fill="#D4AF6A" opacity=".7"/>
+                <!-- Date & venue -->
+                <rect x="55" y="126" width="110" height="6" rx="2" fill="#7070A0" opacity=".5"/>
+                <rect x="65" y="138" width="90" height="6" rx="2" fill="#7070A0" opacity=".4"/>
+                <rect x="75" y="150" width="70" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <!-- Divider -->
+                <line x1="40" y1="166" x2="180" y2="166" stroke="#D4AF6A" stroke-width=".5" opacity=".3"/>
+                <circle cx="110" cy="166" r="3" fill="#D4AF6A" opacity=".6"/>
+                <!-- RSVP -->
+                <rect x="70" y="176" width="80" height="16" rx="1" fill="#8C6A1E" opacity=".7"/>
+                <rect x="82" y="181" width="56" height="6" rx="2" fill="#050508" opacity=".5"/>
+              </svg>
+            </div>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Card Design</span>
+              <span class="p-overlay-title">Wedding Invitation</span>
+            </div>
+          </div>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Invitation Design · Print</span>
+              <span class="p-title">Elegant Wedding Invitation</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Event Flyer (sample) -->
+        <div class="p-card reveal" data-category="flyer">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="220" height="220" fill="#050508"/>
+                <!-- Background gradient -->
+                <rect width="220" height="220" fill="url(#flyerGrad)"/>
+                <defs>
+                  <linearGradient id="flyerGrad" x1="0" y1="0" x2="220" y2="220">
+                    <stop offset="0%" stop-color="#0C0C1A"/>
+                    <stop offset="100%" stop-color="#050508"/>
+                  </linearGradient>
+                </defs>
+                <!-- Diagonal accent -->
+                <polygon points="0,0 80,0 0,80" fill="#D4AF6A" opacity=".06"/>
+                <polygon points="220,220 140,220 220,140" fill="#D4AF6A" opacity=".06"/>
+                <!-- Gold top line -->
+                <rect x="0" y="0" width="220" height="3" fill="#D4AF6A" opacity=".7"/>
+                <!-- Event label -->
+                <rect x="20" y="18" width="80" height="10" rx="2" fill="#8C6A1E" opacity=".8"/>
+                <!-- Big title -->
+                <rect x="16" y="40" width="180" height="22" rx="2" fill="#FFFFFF" opacity=".9"/>
+                <rect x="16" y="68" width="140" height="16" rx="2" fill="#D4AF6A" opacity=".7"/>
+                <!-- Divider with diamond -->
+                <line x1="16" y1="96" x2="86" y2="96" stroke="#D4AF6A" stroke-width=".6" opacity=".5"/>
+                <polygon points="110,91 115,96 110,101 105,96" fill="#D4AF6A" opacity=".6"/>
+                <line x1="134" y1="96" x2="204" y2="96" stroke="#D4AF6A" stroke-width=".6" opacity=".5"/>
+                <!-- Details -->
+                <rect x="16" y="112" width="100" height="8" rx="2" fill="#7070A0" opacity=".5"/>
+                <rect x="16" y="126" width="80" height="8" rx="2" fill="#7070A0" opacity=".4"/>
+                <rect x="16" y="140" width="60" height="8" rx="2" fill="#7070A0" opacity=".3"/>
+                <!-- Image placeholder -->
+                <rect x="140" y="106" width="64" height="64" rx="2" fill="#101022" stroke="#4A3810" stroke-width=".8"/>
+                <!-- CTA -->
+                <rect x="16" y="168" width="120" height="26" rx="1" fill="#8C6A1E" opacity=".8"/>
+                <rect x="28" y="176" width="80" height="8" rx="2" fill="#050508" opacity=".4"/>
+                <!-- Bottom contact -->
+                <rect x="0" y="206" width="220" height="14" fill="#0C0C1A"/>
+                <rect x="20" y="210" width="60" height="6" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="140" y="210" width="60" height="6" rx="2" fill="#D4AF6A" opacity=".5"/>
+              </svg>
+            </div>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Flyer Design</span>
+              <span class="p-overlay-title">Event Promo Flyer</span>
+            </div>
+          </div>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Flyer Design · Digital</span>
+              <span class="p-title">Event Promotion Flyer</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Landing Page (sample, wide) -->
+        <div class="p-card p-wide reveal reveal-delay-1" data-category="web">
+          <div class="p-img">
+            <div class="mock-preview">
+              <svg width="100%" height="100%" viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+                <rect width="500" height="180" fill="#08080F"/>
+                <!-- Full-width hero -->
+                <rect x="0" y="0" width="500" height="90" fill="#101022"/>
+                <!-- Grid lines -->
+                <line x1="0" y1="30" x2="500" y2="30" stroke="#D4AF6A" stroke-width=".2" opacity=".15"/>
+                <line x1="0" y1="60" x2="500" y2="60" stroke="#D4AF6A" stroke-width=".2" opacity=".15"/>
+                <line x1="100" y1="0" x2="100" y2="90" stroke="#D4AF6A" stroke-width=".2" opacity=".1"/>
+                <line x1="200" y1="0" x2="200" y2="90" stroke="#D4AF6A" stroke-width=".2" opacity=".1"/>
+                <line x1="300" y1="0" x2="300" y2="90" stroke="#D4AF6A" stroke-width=".2" opacity=".1"/>
+                <line x1="400" y1="0" x2="400" y2="90" stroke="#D4AF6A" stroke-width=".2" opacity=".1"/>
+                <!-- Hero text centered -->
+                <rect x="150" y="18" width="200" height="18" rx="2" fill="#FFFFFF" opacity=".8"/>
+                <rect x="160" y="42" width="180" height="12" rx="2" fill="#D4AF6A" opacity=".6"/>
+                <rect x="190" y="62" width="120" height="18" rx="1" fill="#8C6A1E" opacity=".8"/>
+                <!-- Features row -->
+                <rect x="0" y="90" width="500" height="2" fill="#D4AF6A" opacity=".2"/>
+                <rect x="16" y="104" width="100" height="56" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="28" y="116" width="76" height="10" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="28" y="132" width="56" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <rect x="28" y="144" width="46" height="6" rx="2" fill="#7070A0" opacity=".2"/>
+
+                <rect x="130" y="104" width="100" height="56" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="142" y="116" width="76" height="10" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="142" y="132" width="56" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <rect x="142" y="144" width="46" height="6" rx="2" fill="#7070A0" opacity=".2"/>
+
+                <rect x="244" y="104" width="100" height="56" rx="2" fill="#0C0C1A" stroke="#4A3810" stroke-width=".8"/>
+                <rect x="256" y="116" width="76" height="10" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="256" y="132" width="56" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <rect x="256" y="144" width="46" height="6" rx="2" fill="#7070A0" opacity=".2"/>
+
+                <rect x="358" y="104" width="126" height="56" rx="2" fill="#0C0C1A" stroke="#8C6A1E" stroke-width=".8"/>
+                <rect x="370" y="116" width="76" height="10" rx="2" fill="#D4AF6A" opacity=".5"/>
+                <rect x="370" y="132" width="56" height="6" rx="2" fill="#7070A0" opacity=".3"/>
+                <rect x="370" y="144" width="46" height="6" rx="2" fill="#7070A0" opacity=".2"/>
+              </svg>
+            </div>
+            <div class="p-overlay">
+              <span class="p-overlay-tag">Landing Page</span>
+              <span class="p-overlay-title">High-Converting Landing Page</span>
+            </div>
+          </div>
+          <div class="p-info">
+            <div>
+              <span class="p-category">Landing Page · Web Development</span>
+              <span class="p-title">High-Converting Product Landing Page</span>
+            </div>
+            <div class="p-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /portfolio-grid -->
     </div>
   </div>
 
   <!-- CTA -->
-  <div style="background:var(--bg3);border-top:1px solid rgba(212,175,106,.1);padding:70px 60px">
-    <div style="max-width:1200px;margin:0 auto;text-align:center" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:16px"><div class="line"></div><span>Start Your Project</span><div class="line"></div></div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,52px);font-weight:700;color:var(--white);margin-bottom:24px;">
-        Want something like this? <span style="background:linear-gradient(135deg,var(--gold-dark),var(--gold-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Let's create it.</span>
-      </h2>
-      <a href="contact.html" class="btn-primary" style="display:inline-flex">Hire Me Now <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  <div class="cta-section">
+    <div class="cta-inner reveal">
+      <div>
+        <div class="cta-eyebrow"><div class="line"></div><span>Start Your Project</span></div>
+        <h2 class="cta-title">Want something like this?<br><span>Let's create it together.</span></h2>
+      </div>
+      <a href="contact.html" class="btn-primary">
+        Hire Me Now
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer>
     <div class="footer-top">
       <div>
         <div class="footer-brand-name">Sparkling<span>Dev</span></div>
         <p class="footer-tagline">Crafting premium digital experiences. Buea, Cameroon. Available 24/7.</p>
-        <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>670 959 751</div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+          670 959 751
+        </div>
       </div>
-      <div><div class="footer-col-title">Navigation</div><ul class="footer-col-links"><li><a href="../index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div><div class="footer-col-title">Services</div><ul class="footer-col-links"><li><a href="services.html">Website Building</a></li><li><a href="services.html">E-Commerce</a></li><li><a href="services.html">Flyer Design</a></li><li><a href="services.html">Card Design</a></li></ul></div>
-      <div><div class="footer-col-title">Contact</div><ul class="footer-col-links"><li><a href="contact.html">Hire Me</a></li><li><a href="contact.html">Get a Quote</a></li></ul></div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-col-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-col-links">
+          <li><a href="services.html">Website Building</a></li>
+          <li><a href="services.html">E-Commerce</a></li>
+          <li><a href="services.html">Flyer Design</a></li>
+          <li><a href="services.html">Card Design</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-col-links">
+          <li><a href="contact.html">Hire Me</a></li>
+          <li><a href="contact.html">Get a Quote</a></li>
+          <li><a href="contact.html">WhatsApp Me</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-bottom"><span class="footer-copy">© 2025 SparklingDev · All rights reserved</span><span class="footer-made">Made with <span>♦</span> in Buea, Cameroon</span></div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 SparklingDev · All rights reserved</span>
+      <span class="footer-made">Made with <span>♦</span> in Buea, Cameroon</span>
+    </div>
   </footer>
-  <button id="backTop" aria-label="Back to top"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050508" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg></button>
-  <!-- WhatsApp Floating Button -->
-  <a class="wa-float" href="https://wa.me/237670959751?text=Hello%20Sparkling%20Dev!%20I%20would%20like%20to%20hire%20you." target="_blank" aria-label="Chat on WhatsApp">
+
+  <!-- WhatsApp -->
+  <a class="wa-float" href="https://wa.me/237670959751?text=Hello%20Sparkling%20Dev!" target="_blank" aria-label="Chat on WhatsApp">
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
     <span class="wa-label">Chat on WhatsApp</span>
   </a>
+
+  <button id="backTop" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050508" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
   <script src="main.js"></script>
-  <script src="portfolio.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="auth-guard.js"></script>
+  <script>
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.p-card').forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
